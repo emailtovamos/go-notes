@@ -1,6 +1,6 @@
 # go-notes
 
-Convert float64 to []byte and then convert back to float64: 
+Convert float64 to []byte and then convert back to float64: https://play.golang.org/p/tIZZJZhIFzq
 
     package main
 
