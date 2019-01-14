@@ -32,3 +32,43 @@ Convert float64 to []byte and then convert back to float64: https://play.golang.
 
         fmt.Println(tagVal)
     }
+
+Use nested struct in message pack: 
+
+    package main
+
+    import (
+        "fmt"
+        "github.com/vmihailenco/msgpack"
+        "time"
+    )
+
+    func main() {
+
+        type SmallStruct struct {
+            SS int `msgpack:"ss"`
+        }
+
+        type BigStruct struct {
+            Timestamp   int64       `msgpack:"timestamp"`
+            SmallStruct SmallStruct `msgpack:"smallStruct"`
+        }
+
+        s := SmallStruct{10}
+
+        data := BigStruct{
+            Timestamp:   time.Now().Unix(),
+            SmallStruct: s,
+        }
+
+        dataBs, err := msgpack.Marshal(data)
+        fmt.Println(dataBs)
+        fmt.Println(err)
+
+        var v BigStruct
+
+        err = msgpack.Unmarshal(dataBs, &v)
+
+        fmt.Println(v.SmallStruct.SS)
+
+    }
